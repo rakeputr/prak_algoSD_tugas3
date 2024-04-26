@@ -14,6 +14,7 @@ DataPenduduk temp[100];
 void header(string message);
 string convertSpaceToUnderscore(string s);
 string convertUnderscoreToSpace(string s);
+void checkData(string file);
 void inputData(string file, int size);
 void readData(string file, int *size, struct DataPenduduk read[]);
 void tampilData(int size, struct DataPenduduk datatampil[]);
@@ -148,46 +149,29 @@ string convertUnderscoreToSpace(string s)
   return s;
 }
 
+void checkData(string file)
+{
+  ifstream ifs(file, ios::in);
+  bool checkData = ifs.good();
+  ifs.close();
+}
+
 void inputData(string file, int size)
 {
   // ofstream ofs(file,)
 
-  ifstream ifs(file, ios::in);
-  bool checkData = ifs.good();
-  ifs.close();
+  ofstream ofs(file, ios::app);
 
-  // cout << checkData;
-  if (!checkData)
+  if (ofs.is_open())
   {
-    ofstream ofs(file, ios::out);
-
-    if (ofs.is_open())
+    for (int i = 0; i < size; i++)
     {
-      for (int i = 0; i < size; i++)
-      {
-        ofs << left << setw(15) << data[i].nik
-            << left << setw(25) << data[i].nama
-            << left << setw(10) << data[i].jeniskelamin << endl;
-      }
-
-      ofs.close();
+      ofs << left << setw(15) << data[i].nik
+          << left << setw(25) << data[i].nama
+          << left << setw(10) << data[i].jeniskelamin << endl;
     }
-  }
-  else
-  {
-    ofstream ofs(file, ios::app);
 
-    if (ofs.is_open())
-    {
-      for (int i = 0; i < size; i++)
-      {
-        ofs << left << setw(15) << data[i].nik
-            << left << setw(25) << data[i].nama
-            << left << setw(10) << data[i].jeniskelamin << endl;
-      }
-
-      ofs.close();
-    }
+    ofs.close();
   }
 }
 
